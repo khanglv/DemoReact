@@ -1,0 +1,31 @@
+
+.inner-addon {
+    position: relative;
+}
+  
+.inner-addon .fas {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+  
+.right-addon .fas { 
+    right: 0px;
+}
+
+.search-header{
+    padding-right: 30px;
+}
+
+.navbar{
+    background: #212529;
+    padding: 0rem 1rem;
+}
+
+.navbar-brand{
+    color: #fff!important;
+}
+
+.nav-link{
+    color: #fff!important;
+}
