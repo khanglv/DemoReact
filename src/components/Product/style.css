@@ -1,0 +1,15 @@
+.item-movie{
+
+}
+
+.item-movie:hover{
+    
+}
+
+.title-active{ 
+    border-bottom: 1px solid #dee2e6;
+}
+
+.title-active:hover{
+    border-bottom: 1px solid rgb(72, 182, 21);
+}
