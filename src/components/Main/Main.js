@@ -1,41 +1,37 @@
 import React, { Component } from 'react';
 import './style.css';
-import { Carousel, CarouselItem, CarouselControl, CarouselIndicators,
+import Header from '../Header/Header';
+import Product from '../Product/Product';
+import { Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption,
         Col, Row, Container,
         Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
-
-const items = [
-    {
-        src: '/images/poster/poster1.jpg',
-        altText: 'Slide 1',
-        caption: 'Slide 1'
-    },
-    {
-        src: '/images/poster/poster2.jpg',
-        altText: 'Slide 2',
-        caption: 'Slide 2'
-    },
-    {
-        src: '/images/poster/poster3.jpg',
-        altText: 'Slide 3',
-        caption: 'Slide 3'
-    },
-    {
-        src: '/images/poster/poster4.jpg',
-        altText: 'Slide 3',
-        caption: 'Slide 3'
-    }
-];
 
 class Main extends Component {
     constructor(props) {
         super(props);
-        this.state = { activeIndex: 0 };
+        this.state = { 
+            activeIndex: 0,
+            lstSlideShow: [],
+        };
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
         this.goToIndex = this.goToIndex.bind(this);
         this.onExiting = this.onExiting.bind(this);
         this.onExited = this.onExited.bind(this);
+    }
+
+    componentDidMount(){
+        fetch('https://api.themoviedb.org/3/discover/movie?api_key=b2d687610125a0a8771748c88621525c&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=1')
+            .then( res => res.json())
+            .then(json => {
+                var lstTmp = json;
+                if(json.results.length > 4){
+                    lstTmp = json.results.slice(0, 4);
+                }
+                this.setState({
+                    lstSlideShow: lstTmp
+                })
+            });
     }
 
     onExiting() {
@@ -48,13 +44,13 @@ class Main extends Component {
 
     next() {
         if (this.animating) return;
-        const nextIndex = this.state.activeIndex === items.length - 1 ? 0 : this.state.activeIndex + 1;
+        const nextIndex = this.state.activeIndex === this.state.lstSlideShow.length - 1 ? 0 : this.state.activeIndex + 1;
         this.setState({ activeIndex: nextIndex });
     }
 
     previous() {
         if (this.animating) return;
-        const nextIndex = this.state.activeIndex === 0 ? items.length - 1 : this.state.activeIndex - 1;
+        const nextIndex = this.state.activeIndex === 0 ? this.state.lstSlideShow.length - 1 : this.state.activeIndex - 1;
         this.setState({ activeIndex: nextIndex });
     }
 
@@ -63,32 +59,35 @@ class Main extends Component {
         this.setState({ activeIndex: newIndex });
     }
     render() {
-        const { activeIndex } = this.state;
+        const { activeIndex, lstSlideShow } = this.state;
 
-        const slides = items.map((item) => {
-          return (
-            <CarouselItem
-              onExiting={this.onExiting}
-              onExited={this.onExited}
-              key={item.src}
-            >
-              <img src={item.src} alt={item.altText} style={{width: '100%', height: 'auto'}}/>
-            </CarouselItem>
-          );
+        const slides = lstSlideShow.map((item) => {
+            var path = 'http://image.tmdb.org/t/p/original' + item.backdrop_path;
+            return (
+                <CarouselItem
+                onExiting={this.onExiting}
+                onExited={this.onExited}
+                key={item.poster_path}
+                >
+                <img src={path} alt={item.poster_path} style={{width: '100%', height: 'auto', maxHeight: '682px'}}/>
+                <CarouselCaption captionText={item.title} captionHeader={item.original_title} />
+                </CarouselItem>
+            );
         });
         return (
             <div>
+                <Header/>
                 <Carousel
                     activeIndex={activeIndex}
                     next={this.next}
                     previous={this.previous}
                 >
-                    <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
+                    <CarouselIndicators items={slides} activeIndex={activeIndex} onClickHandler={this.goToIndex} />
                     {slides}
                     <CarouselControl direction="prev" onClickHandler={this.previous} />
                     <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
                 </Carousel>
-                <div style={{border: '1px solid rgba(0, 0, 0, 0.5)', width: '280px', height: '320px', background: 'rgba(0, 0, 0, 0.8)', position: 'absolute', top: '20px', right: '12%'}}>
+                <div style={{border: '1px solid rgba(0, 0, 0, 0.5)', width: '280px', height: '320px', background: 'rgba(0, 0, 0, 0.8)', position: 'absolute', top: '210px', right: '12%'}}>
                     <Col xs="6" className="text-center" style={{ padding: '5px 0px', background: '#00b8ff', color: '#fff' }}>
                         MUA VÉ NHANH
                     </Col>
@@ -106,6 +105,10 @@ class Main extends Component {
                         </Row>
                     </Container>
                 </div>
+
+                <Col style={{ marginTop: '30px' }} xs="12" sm="12" lg="12">
+                    <Product />
+                </Col>
             </div>
         );
     }

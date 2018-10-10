@@ -35,7 +35,7 @@ class Header extends Component {
                     </Container>
                 </div>
                 <Navbar light  expand="md">
-                    <NavbarBrand>Rank Of Film</NavbarBrand>
+                    <NavbarBrand href="/">Rank Of Film</NavbarBrand>
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav navbar>
                             <UncontrolledDropdown nav inNavbar>
