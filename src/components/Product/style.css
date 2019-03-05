@@ -1,0 +1,57 @@
+/* Start custom hover iamge item */
+.item-movie{
+    position: relative;
+}
+
+.item-movie:hover .overlay{
+    opacity: 1;
+}
+
+.image-item-movie {
+    opacity: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: .5s ease;
+    backface-visibility: hidden;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: auto;
+    width: auto;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgba(33, 37, 41, 0.8);
+}
+
+.text {
+    border: 1px solid #fff;
+    font-size: 16px;
+    padding: 5px 15px;
+    color: white;
+    font-size: 18px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.text:hover {
+    background-color: #00b8ff;
+}
+/* End custom hover iamge item */
+.title-active{ 
+    border-bottom: 1px solid #dee2e6;
+}
+
+.title-active:hover{
+    border-bottom: 1px solid rgb(72, 182, 21);
+}

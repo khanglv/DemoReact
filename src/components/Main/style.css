@@ -1,0 +1,10 @@
+.carousel-control-next, .carousel-control-prev{
+    width: 8%;
+}
+
+.book-ticket{}
+
+.book-ticket:hover{
+    border-bottom: 1px solid #fff;
+    color: #fff;
+}
