@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './style.css';
 import Header from '../Header/Header';
 import Product from '../Product/Product';
+import { listTopFour } from './actions'
 import { Carousel, CarouselItem, CarouselControl, CarouselIndicators, CarouselCaption,
         Col, Row, Container,
         Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
@@ -21,17 +22,18 @@ class Main extends Component {
     }
 
     componentDidMount(){
-        fetch('https://api.themoviedb.org/3/discover/movie?api_key=b2d687610125a0a8771748c88621525c&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=1')
-            .then( res => res.json())
-            .then(json => {
-                var lstTmp = json;
-                if(json.results.length > 4){
-                    lstTmp = json.results.slice(0, 4);
-                }
-                this.setState({
-                    lstSlideShow: lstTmp
-                })
-            });
+        // fetch('https://api.themoviedb.org/3/discover/movie?api_key=b2d687610125a0a8771748c88621525c&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=1')
+        //     .then( res => res.json())
+        //     .then(json => {
+        //         var lstTmp = json;
+        //         if(json.results.length > 4){
+        //             lstTmp = json.results.slice(0, 4);
+        //         }
+        //         this.setState({
+        //             lstSlideShow: lstTmp
+        //         })
+        //     });
+        this.props.listTopFour()
     }
 
     onExiting() {

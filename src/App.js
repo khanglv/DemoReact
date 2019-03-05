@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Main from './components/Main/Main';
 import RouterURL from './components/RouterURL/RouterURL';
-import Product from './components/Product/Product';
 import { Row, Col } from 'reactstrap'
 
 class App extends Component {

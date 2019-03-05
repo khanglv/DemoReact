@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './style.css';
 import { Col, Row, Container } from 'reactstrap';
+import { withRouter } from 'react-router'
 
 class Product extends Component {
     constructor(props){
@@ -8,6 +9,7 @@ class Product extends Component {
         this.state={
             lstData: [],
         };
+        // this.detail_film = this.detail_film.bind(this);
     }
 
     componentDidMount(){
@@ -20,18 +22,23 @@ class Product extends Component {
             });
     }
 
+    detail_film = (id)=>{
+        let path = `/detail`;
+        this.context.history.push(path);
+    }
+
     render() {
         const { lstData } = this.state;
         const lstDataFilm = lstData.map((item) => {
             var path = 'http://image.tmdb.org/t/p/w300' + item.poster_path;
             return (
 
-                <Col key={item.poster_path} md="3" sm="3" xs="4" style={styles.itemMovie} className="item-movie">
-                    <div>
-                        <img alt="" src={path} style={{ width: '100%', height: '100%' }} />
-                        <div style={{ background: 'red' }}>
-
-                        </div>
+                <Col key={item.poster_path} md="3" sm="3" xs="4" style={styles.itemMovie} onClick={() => this.detail_film(item.id)}>
+                    <div className="item-movie">
+                        <img alt="" src={path} style={{ width: '100%', height: '100%' }} className="image-item-movie"/>
+                        <a className="overlay">
+                            <div className="text">Ticket</div>
+                        </a>
                     </div>
                     <div>
                         <label>{item.title}</label>
@@ -44,7 +51,7 @@ class Product extends Component {
                 <Container style={{maxWidth: '1370px'}}>
                     <Row style={styles.titleMovie}>
                         <Col xs="3" className="title-active">
-                            <label style={{ fontSize: '22px', marginLeft: '-15px' }}>PHIM ĐANG CHIẾU</label>
+                            <label href="a" style={{ fontSize: '22px', marginLeft: '-15px' }}>PHIM ĐANG CHIẾU</label>
                         </Col>
                         <Col xs="3" className="title-active">
                             <label style={{ fontSize: '22px' }}>PHIM SẮP CHIẾU</label>
